@@ -5,8 +5,10 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\EtudiantResource\Pages;
 use App\Filament\Resources\EtudiantResource\RelationManagers;
 use App\Models\Etudiant;
+use App\Models\Promotion;
 use App\Models\User;
-use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -14,6 +16,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Parfaitementweb\FilamentCountryField\Forms\Components\Country;
+use Parfaitementweb\FilamentCountryField\Tables\Columns\CountryColumn;
 
 class EtudiantResource extends Resource
 {
@@ -28,29 +32,33 @@ class EtudiantResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')
-                ->label('Nom'),
+                    ->label('Nom'),
                 TextInput::make('prenom')
-                ->label('Prénom'),
+                    ->label('Prénom'),
                 TextInput::make('postnom')
-                ->label('Postnom'),
+                    ->label('Postnom'),
                 TextInput::make('email')
-                ->label('Email'),
+                    ->email()
+                    ->label('Email'),
                 TextInput::make('telephone')
-                ->label('Telephone'),
+                    ->tel()
+                    ->label('Telephone'),
                 TextInput::make('adresse')
-                ->label('Adresse'),
-                TextInput::make('telephone')
-                ->label('Telephone'),
+                    ->label('Adresse'),
                 TextInput::make('matricule')
-                ->label('Matricule'),
+                    ->label('Matricule'),
                 TextInput::make('lieu_de_naissance')
-                ->label('Lieu de naissance'),
-                TextInput::make('date_de_naissance')
-                ->label('Date de naissance'),
-                TextInput::make('nationalite')
-                ->label('Nationalité'),
-                TextInput::make('promotion_id')
-
+                    ->label('Lieu de naissance'),
+                DatePicker::make('date_de_naissance')
+                    ->label('Date de naissance'),
+                Country::make('nationalite')
+                    ->default('Congo-Kinshasa')
+                    ->searchable()
+                    ->label('Nationalité'),
+                Select::make('promotion_id')
+                    ->label('Promotion')
+                    ->options(Promotion::all()->pluck('nom', 'id'))
+                    ->searchable()
             ]);
     }
 
@@ -58,7 +66,7 @@ class EtudiantResource extends Resource
     {
         return $table
             ->columns([
-                //
+                CountryColumn::make('nationalite')
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
