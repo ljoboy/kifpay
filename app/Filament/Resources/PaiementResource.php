@@ -23,7 +23,11 @@ class PaiementResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\DatePicker::make('percu_le')
+                    ->required(),
+                Forms\Components\Select::make('jeton_id')
+                    ->relationship('jeton', 'id')
+                    ->required(),
             ]);
     }
 
@@ -31,17 +35,37 @@ class PaiementResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('percu_le')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('deleted_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('jeton.id')
+                    ->numeric()
+                    ->sortable(),
             ])
             ->filters([
-                //
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ]);
     }
@@ -58,7 +82,16 @@ class PaiementResource extends Resource
         return [
             'index' => Pages\ListPaiements::route('/'),
             'create' => Pages\CreatePaiement::route('/create'),
+            'view' => Pages\ViewPaiement::route('/{record}'),
             'edit' => Pages\EditPaiement::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 }

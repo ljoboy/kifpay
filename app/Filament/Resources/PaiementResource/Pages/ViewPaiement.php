@@ -4,19 +4,16 @@ namespace App\Filament\Resources\PaiementResource\Pages;
 
 use App\Filament\Resources\PaiementResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
+use Filament\Resources\Pages\ViewRecord;
 
-class EditPaiement extends EditRecord
+class ViewPaiement extends ViewRecord
 {
     protected static string $resource = PaiementResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
-            Actions\ViewAction::make(),
-            Actions\DeleteAction::make(),
-            Actions\ForceDeleteAction::make(),
-            Actions\RestoreAction::make(),
+            Actions\EditAction::make(),
         ];
     }
 }

@@ -32,7 +32,7 @@ class Jeton extends Model
 
     public function personnel(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'personnel_id', 'user_id');
+        return $this->belongsTo(User::class, 'personnel_id');
     }
     public function frais(): BelongsTo
     {
@@ -41,6 +41,6 @@ class Jeton extends Model
 
     public function etudiant(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'etudiant_id', 'user_id');
+        return $this->belongsTo(User::class, 'etudiant_id');
     }
 }

@@ -23,7 +23,12 @@ class CompteResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('numero')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('banque')
+                    ->required()
+                    ->maxLength(255),
             ]);
     }
 
@@ -31,17 +36,35 @@ class CompteResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('numero')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('banque')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('deleted_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ]);
     }
@@ -58,7 +81,16 @@ class CompteResource extends Resource
         return [
             'index' => Pages\ListComptes::route('/'),
             'create' => Pages\CreateCompte::route('/create'),
+            'view' => Pages\ViewCompte::route('/{record}'),
             'edit' => Pages\EditCompte::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 }
