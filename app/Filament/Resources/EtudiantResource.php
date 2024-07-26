@@ -5,11 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\EtudiantResource\Pages;
 use App\Filament\Resources\EtudiantResource\RelationManagers;
 use App\Models\Etudiant;
-use App\Models\Promotion;
-use App\Models\User;
-use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
+use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -17,13 +13,12 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Parfaitementweb\FilamentCountryField\Forms\Components\Country;
-use Parfaitementweb\FilamentCountryField\Tables\Columns\CountryColumn;
+use Ysfkaya\FilamentPhoneInput\Forms\PhoneInput;
+use Ysfkaya\FilamentPhoneInput\PhoneInputNumberType;
 
 class EtudiantResource extends Resource
 {
-    protected static ?string $model = User::class;
-    protected static ?string $modelLabel = 'Etudiant';
-    protected static ?string $navigationLabel = 'Etudiants';
+    protected static ?string $model = Etudiant::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -31,34 +26,37 @@ class EtudiantResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')
-                    ->label('Nom'),
-                TextInput::make('prenom')
-                    ->label('Prénom'),
-                TextInput::make('postnom')
-                    ->label('Postnom'),
-                TextInput::make('email')
-                    ->email()
-                    ->label('Email'),
-                TextInput::make('telephone')
-                    ->tel()
-                    ->label('Telephone'),
-                TextInput::make('adresse')
-                    ->label('Adresse'),
-                TextInput::make('matricule')
-                    ->label('Matricule'),
-                TextInput::make('lieu_de_naissance')
-                    ->label('Lieu de naissance'),
-                DatePicker::make('date_de_naissance')
-                    ->label('Date de naissance'),
+                Forms\Components\TextInput::make('nom')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('postnom')
+                    ->maxLength(255)
+                    ->default(null),
+                Forms\Components\TextInput::make('prenom')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('matricule')
+                    ->required()
+                    ->maxLength(255),
+                PhoneInput::make('telephone')
+                    ->initialCountry('CD')
+                    ->disallowDropdown()
+                    ->required(),
+                Forms\Components\TextInput::make('addresse')
+                    ->maxLength(255)
+                    ->default(null),
+                Forms\Components\TextInput::make('lieu_de_naissance')
+                    ->maxLength(255)
+                    ->default(null),
+                Forms\Components\DatePicker::make('date_de_naissance')
+                    ->required(),
                 Country::make('nationalite')
-                    ->default('Congo-Kinshasa')
                     ->searchable()
-                    ->label('Nationalité'),
-                Select::make('promotion_id')
-                    ->label('Promotion')
-                    ->options(Promotion::all()->pluck('nom', 'id'))
-                    ->searchable()
+                    ->required()
+                    ->default('Congo-Kinshasa'),
+                Forms\Components\Select::make('promotion_id')
+                    ->relationship('promotion', 'nom')
+                    ->default(null),
             ]);
     }
 
@@ -66,7 +64,40 @@ class EtudiantResource extends Resource
     {
         return $table
             ->columns([
-                CountryColumn::make('nationalite')
+                Tables\Columns\TextColumn::make('nom')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('postnom')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('prenom')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('matricule')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('telephone')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('addresse')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('lieu_de_naissance')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('date_de_naissance')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('nationalite')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('deleted_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('promotion.id')
+                    ->numeric()
+                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),

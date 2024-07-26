@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('jetons', function (Blueprint $table) {
             $table->id();
-            $table->string('intitule', 255);
-            $table->date('delivre_le');
+            $table->string('code');
             $table->timestamps();
             $table->softDeletes();
             $table->foreignId('personnel_id')->constrained('users');
-            $table->foreignId('etudiant_id')->constrained('users');
+            $table->foreignId('etudiant_id')->constrained();
             $table->foreignId('frais_id')->constrained();
         });
     }

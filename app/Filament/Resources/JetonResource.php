@@ -23,16 +23,8 @@ class JetonResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('intitule')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\DatePicker::make('delivre_le')
-                    ->required(),
-                Forms\Components\Select::make('personnel_id')
-                    ->relationship('personnel', 'name')
-                    ->required(),
                 Forms\Components\Select::make('etudiant_id')
-                    ->relationship('etudiant', 'name')
+                    ->relationship('etudiant', 'nom')
                     ->required(),
                 Forms\Components\Select::make('frais_id')
                     ->relationship('frais', 'id')
@@ -44,15 +36,8 @@ class JetonResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('intitule')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('delivre_le')
-                    ->date()
+                Tables\Columns\TextColumn::make('frais.intitule')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
@@ -65,9 +50,6 @@ class JetonResource extends Resource
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('etudiant.name')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('frais.id')
                     ->numeric()
                     ->sortable(),
             ])

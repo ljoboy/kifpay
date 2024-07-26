@@ -18,14 +18,6 @@ return new class extends Migration
             $table->dateTime('email_verified_at')->nullable();
             $table->string('password', 255);
             $table->rememberToken();
-            $table->string('postnom', 255)->nullable();
-            $table->string('prenom', 255)->nullable();
-            $table->string('matricule', 255)->unique()->nullable();
-            $table->string('telephone', 255)->nullable();
-            $table->string('adresse', 255)->nullable();
-            $table->string('lieu_de_naissance', 255)->nullable();
-            $table->date('date_de_naissance')->nullable();
-            $table->string('nationalite', 255)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

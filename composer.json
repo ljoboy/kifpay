@@ -13,7 +13,8 @@
         "laravel/tinker": "^2.9",
         "parfaitementweb/filament-country-field": "^2.1",
         "stechstudio/filament-impersonate": "^3.12",
-        "tomatophp/filament-users": "^1.0"
+        "tomatophp/filament-users": "^1.0",
+        "ysfkaya/filament-phone-input": "^2.3"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.13",

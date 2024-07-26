@@ -63,12 +63,4 @@ class User extends Authenticatable
             'deleted_at' => 'datetime',
         ];
     }
-
-    /**
-     * @return BelongsTo
-     */
-    public function promotion(): BelongsTo
-    {
-        return $this->belongsTo(Promotion::class);
-    }
 }

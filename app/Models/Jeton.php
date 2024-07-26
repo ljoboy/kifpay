@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Traits\AddCodeToJeton;
+use App\Traits\AddsPersonnelId;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,6 +13,7 @@ class Jeton extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use AddsPersonnelId;
 
     protected $fillable = [
         'intitule',
@@ -41,6 +44,6 @@ class Jeton extends Model
 
     public function etudiant(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'etudiant_id');
+        return $this->belongsTo(Etudiant::class);
     }
 }
