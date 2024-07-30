@@ -30,7 +30,7 @@ class EtudiantFactory extends Factory
             'date_de_naissance' => $this->faker->dateTimeBetween('-50 years', '-18 years'),
             'nationalite' => 'Congolaise',
             'promotion_id' => Promotion::all()->random()->id,
-            'lieu_de_naissance' => $this->faker->city,
+            'lieu_de_naissance' => ,
             'addresse' => $this->faker->address,
         ];
     }

@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Parfaitementweb\FilamentCountryField\Forms\Components\Country;
 use Ysfkaya\FilamentPhoneInput\Forms\PhoneInput;
 use Ysfkaya\FilamentPhoneInput\PhoneInputNumberType;
+use Ysfkaya\FilamentPhoneInput\Tables\PhoneColumn;
 
 class EtudiantResource extends Resource
 {
@@ -70,9 +71,12 @@ class EtudiantResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('prenom')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('promotion.nom')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('matricule')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('telephone')
+                PhoneColumn::make('telephone')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('addresse')
                     ->searchable(),
@@ -95,9 +99,6 @@ class EtudiantResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('promotion.id')
-                    ->numeric()
-                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),

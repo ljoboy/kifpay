@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7be269212f3aff44abe69078a0a0713c",
+    "content-hash": "fd6483b4175448629343308e27954be0",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -3625,6 +3625,62 @@
                 }
             ],
             "time": "2024-07-15T18:27:32+00:00"
+        },
+        {
+            "name": "ljoboy/drc-data",
+            "version": "0.10.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ljoboy/drc-data.git",
+                "reference": "2db8f63b3c300d25123e3c8100c51081ec1a8ae1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ljoboy/drc-data/zipball/2db8f63b3c300d25123e3c8100c51081ec1a8ae1",
+                "reference": "2db8f63b3c300d25123e3c8100c51081ec1a8ae1",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DRCData\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dark Angel",
+                    "email": "jonathanyombo@gmail.com",
+                    "role": "lead"
+                }
+            ],
+            "description": "Our goal is to create solutions for our country (DRC). based on the reality of the situation, this repository will contain the basic data for the creation of any solution.",
+            "homepage": "https://github.com/ljoboy/drc-data/",
+            "keywords": [
+                "drc",
+                "rdc"
+            ],
+            "support": {
+                "issues": "https://github.com/ljoboy/drc-data/issues",
+                "source": "https://github.com/ljoboy/drc-data/tree/0.10.1"
+            },
+            "time": "2021-03-28T12:26:13+00:00"
         },
         {
             "name": "masterminds/html5",
