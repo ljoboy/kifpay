@@ -23,7 +23,7 @@ class EtudiantFactory extends Factory
         $person = new Person($this->faker);
         return [
             'nom' => $person->lastname,
-            'postnom' => $person->lastname,
+            'postnom' => $person->middlename,
             'prenom' => $person->firstname,
             'telephone' => $person->phone,
             'matricule' => strtoupper(Str::random(14)),
