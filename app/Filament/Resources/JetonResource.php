@@ -27,7 +27,7 @@ class JetonResource extends Resource
                     ->relationship('etudiant', 'nom')
                     ->required(),
                 Forms\Components\Select::make('frais_id')
-                    ->relationship('frais', 'id')
+                    ->relationship('frais', 'intitule')
                     ->required(),
             ]);
     }

@@ -30,7 +30,7 @@ class FraisResource extends Resource
                     ->required()
                     ->numeric(),
                 Forms\Components\Select::make('promotion_id')
-                    ->relationship('promotion', 'id')
+                    ->relationship('promotion', 'nom')
                     ->required(),
             ]);
     }
