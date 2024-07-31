@@ -24,7 +24,15 @@ class PaiementResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('jeton_id')
+                    ->label('Jeton')
                     ->relationship('jeton', 'code')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
+                Forms\Components\Select::make('compte_id')
+                    ->label('Compte')
+                    ->relationship('compte', 'banque')
+                    ->preload()
                     ->searchable()
                     ->required(),
             ]);
@@ -36,6 +44,10 @@ class PaiementResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('percu_le')
                     ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('jeton.code')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('compte.code')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -49,9 +61,6 @@ class PaiementResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('jeton.id')
-                    ->numeric()
-                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),

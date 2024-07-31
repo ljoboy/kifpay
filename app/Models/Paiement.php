@@ -31,4 +31,9 @@ class Paiement extends Model
     {
         return $this->belongsTo(Jeton::class);
     }
+
+    public function compte(): BelongsTo
+    {
+        return $this->belongsTo(Compte::class);
+    }
 }
