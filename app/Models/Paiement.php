@@ -14,7 +14,8 @@ class Paiement extends Model
 
     protected $fillable = [
         'percu_le',
-        'jeton_id'
+        'jeton_id',
+        'compte_id'
     ];
 
     protected function casts(): array

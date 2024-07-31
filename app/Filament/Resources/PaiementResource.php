@@ -35,6 +35,10 @@ class PaiementResource extends Resource
                     ->preload()
                     ->searchable()
                     ->required(),
+                Forms\Components\DatePicker::make('percu_le')
+                    ->default(now())
+                    ->label('Percu le')
+                    ->required(),
             ]);
     }
 

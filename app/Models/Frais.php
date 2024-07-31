@@ -18,7 +18,8 @@ class Frais extends Model
     protected $fillable = [
         'intitule',
         'montant',
-        'promotion_id'
+        'promotion_id',
+        'currency'
     ];
 
     protected function casts(): array
