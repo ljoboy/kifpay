@@ -24,13 +24,21 @@ class FraisResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('intitule')
+                    ->label('Libéllé')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\Select::make('promotion_id')
+                    ->relationship('promotion', 'nom')
+                    ->required(),
                 Forms\Components\TextInput::make('montant')
                     ->required()
                     ->numeric(),
-                Forms\Components\Select::make('promotion_id')
-                    ->relationship('promotion', 'nom')
+                Forms\Components\Select::make('currency')
+                    ->label('Devise')
+                    ->options([
+                        'CDF' => 'CDF',
+                        'USD' => 'USD',
+                    ])
                     ->required(),
             ]);
     }
@@ -40,8 +48,15 @@ class FraisResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('intitule')
+                    ->label('Libéllé')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('montant')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('currency')
+                    ->label('Devise')
+                    ->size(Tables\Columns\TextColumn\TextColumnSize::Small),
+                Tables\Columns\TextColumn::make('promotion.nom')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -56,9 +71,6 @@ class FraisResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('promotion.id')
-                    ->numeric()
-                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),

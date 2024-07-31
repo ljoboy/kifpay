@@ -15,8 +15,8 @@ trait AddsPersonnelId
         static::creating(function ($model) {
             if (Auth::check()) {
                 $model->personnel_id = Auth::id();
+                $model->code = strtoupper(Str::random(12));
             }
-            $model->code = strtoupper(Str::random(12));
         });
     }
 }

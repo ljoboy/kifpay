@@ -23,10 +23,9 @@ class PaiementResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\DatePicker::make('percu_le')
-                    ->required(),
                 Forms\Components\Select::make('jeton_id')
-                    ->relationship('jeton', 'id')
+                    ->relationship('jeton', 'code')
+                    ->searchable()
                     ->required(),
             ]);
     }

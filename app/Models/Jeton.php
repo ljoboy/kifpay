@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
-use App\Traits\AddCodeToJeton;
 use App\Traits\AddsPersonnelId;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class Jeton extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    use AddsPersonnelId;
 
     protected $fillable = [
         'intitule',
@@ -45,5 +45,17 @@ class Jeton extends Model
     public function etudiant(): BelongsTo
     {
         return $this->belongsTo(Etudiant::class);
+    }
+
+    public static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (Auth::check()) {
+                $model->personnel_id = Auth::id();
+                $model->code = strtoupper(Str::random(12));
+            }
+        });
     }
 }

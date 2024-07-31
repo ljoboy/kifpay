@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -37,5 +38,12 @@ class Etudiant extends Model
     public function promotion(): BelongsTo
     {
         return $this->belongsTo(Promotion::class);
+    }
+
+    public function fullname(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => ucfirst($this->prenom). ' ' . strtoupper($this->nom) . ' ' . strtoupper($this->postnom)
+        );
     }
 }
