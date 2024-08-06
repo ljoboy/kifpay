@@ -3,12 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PaiementResource\Pages;
-use App\Filament\Resources\PaiementResource\RelationManagers;
 use App\Models\Paiement;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -47,7 +47,7 @@ class PaiementResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('percu_le')
-                    ->date()
+                    ->date('j M Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('jeton.code')
                     ->sortable(),
@@ -72,6 +72,11 @@ class PaiementResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Action::make('imprimer')
+                    ->label('Imprimer')
+                    ->url(fn(Paiement $record): string => route('print', ['record' => $record]))
+                    ->icon('heroicon-o-printer')
+                    ->color('info'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
